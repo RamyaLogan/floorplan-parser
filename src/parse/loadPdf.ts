@@ -1,12 +1,15 @@
+import * as pdfjs from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { promises as fs } from 'fs';
+
+(pdfjs as any).disableWorker = true;
 
 /**
- * PDF loader stub
+ * Load a PDF document using pdfjs-dist
  *
- * In production, use pdfjs-dist to open the PDF and hand a document proxy to extract.ts.
  * Kept separate so you can swap in pdf-lib or a native bridge later.
  */
-export async function loadPdfDoc(pdfPath: string): Promise<any> {
-  // TODO: implement real pdfjs-dist load here.
-  // For now we just return the file path; extract.ts will know what to do (mock).
-  return { pdfPath };
+export async function loadPdfDoc(pdfPath: string): Promise<pdfjs.PDFDocumentProxy> {
+  const data = await fs.readFile(pdfPath);
+  const loadingTask = pdfjs.getDocument({ data });
+  return loadingTask.promise;
 }
