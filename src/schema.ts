@@ -32,6 +32,7 @@ export interface RoomOut {
 export interface ScaleInfo {
   feetPerPdfUnit: number;
   pdfUnitsPerFoot: number;
+  source: string;
   note?: string;
 }
 
@@ -47,4 +48,5 @@ export interface ParseResponse {
   walls: WallOut[];
   dimensions: DimensionOut[];
   rooms: RoomOut[];
+  warnings: string[];
 }
